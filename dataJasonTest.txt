@@ -1,0 +1,171 @@
+services:
+
+1. سرویس هوش مصنوعی (AI)
+{
+    "title": "AI Smart Assistant",
+    "icon": "🤖",
+    "category": "ai",
+    "description": "پیشرفته‌ترین دستیار هوشمند مبتنی بر هوش مصنوعی برای اتوماسیون کسب و کار",
+    "features": [
+        "پردازش زبان طبیعی",
+        "یادگیری ماشین پیشرفته",
+        "تحلیل داده‌های حجیم",
+        "پیش‌بینی هوشمند"
+    ],
+    "is_active": true
+}
+
+2. سرویس اتوماسیون (Automation)
+{
+    "title": "Workflow Automation",
+    "icon": "⚙️",
+    "category": "automation",
+    "description": "سیستم اتوماسیون فرآیندهای کسب و کار برای افزایش بهره‌وری",
+    "features": [
+        "اتوماسیون گردش کار",
+        "پردازش خودکار اسناد",
+        "یکپارچه‌سازی با سیستم‌های مختلف",
+        "گزارش‌گیری خودکار"
+    ],
+    "is_active": true
+}
+
+3. سرویس بینایی کامپیوتر (Vision)
+{
+    "title": "Computer Vision System",
+    "icon": "👁️",
+    "category": "vision",
+    "description": "سیستم تشخیص تصویر و ویدئو با دقت بالا",
+    "features": [
+        "تشخیص اشیاء در زمان واقعی",
+        "تشخیص چهره",
+        "آنالیز ویدئو",
+        "طبقه‌بندی تصاویر"
+    ],
+    "is_active": true
+}
+
+4. سرویس دیتا (Data Intelligence)
+{
+    "title": "Data Analytics Platform",
+    "icon": "📊",
+    "category": "data",
+    "description": "پلتفرم پیشرفته تحلیل داده و هوش تجاری",
+    "features": [
+        "داشبورد تعاملی",
+        "تحلیل پیش‌بینی کننده",
+        "گزارش‌های سفارشی",
+        "یکپارچه‌سازی با دیتابیس‌ها"
+    ],
+    "is_active": true
+}
+
+5. سرویس چت‌بات (Chatbot)
+{
+    "title": "Smart Chatbot",
+    "icon": "💬",
+    "category": "chatbot",
+    "description": "چت‌بات هوشمند برای پشتیبانی 24 ساعته مشتریان",
+    "features": [
+        "پاسخگویی خودکار",
+        "درک زبان طبیعی",
+        "یادگیری از مکالمات",
+        "اتصال به سیستم تیکتینگ"
+    ],
+    "is_active": true
+}
+
+6. سرویس امنیت (Security - با دسته other)
+{
+    "title": "Cyber Security Suite",
+    "icon": "🔒",
+    "category": "other",
+    "description": "مجموعه ابزارهای امنیت سایبری برای محافظت از سیستم‌ها",
+    "features": [
+        "تشخیص تهدیدات پیشرفته",
+        "مانیتورینگ امنیتی",
+        "واکنش سریع به حملات",
+        "گزارش‌های امنیتی"
+    ],
+    "is_active": true
+}
+
+===============================================================================================================================
+portfolio:
+
+  {
+    "title": "دستیار هوشمند بانکداری",
+    "category": "هوش مصنوعی",
+    "icon": "🏦",
+    "description": "دستیار مجازی مبتنی بر هوش مصنوعی برای یک بانک بزرگ که روزانه بیش از ۵۰ هزار درخواست مشتری را مدیریت می‌کند.",
+    "results": "کاهش ۷۰٪ زمان پاسخ‌دهی، ۴۰٪ صرفه‌جویی در هزینه",
+    "tech": ["NLP", "Chatbot", "AWS"],
+    "is_active": true
+  }
+  
+  {
+    "title": "تحلیل پیش‌بینی خرده‌فروشی",
+    "category": "داده",
+    "icon": "🛍️",
+    "description": "سیستم پیش‌بینی تقاضا برای یک شبکه خرده‌فروشی با بیش از ۲۰۰ فروشگاه.",
+    "results": "کاهش ۲۵٪ موجودی انبار، افزایش ۱۵٪ فروش",
+    "tech": ["Machine Learning", "Big Data", "Tableau"],
+    "is_active": true
+  }
+
+  {
+    "title": "سیستم امنیتی تشخیص چهره",
+    "category": "بینایی",
+    "icon": "🔒",
+    "description": "سیستم امنیت سازمانی با دقت ۹۹.۹٪ برای کنترل دسترسی.",
+    "results": "عدم وقوع نقض امنیتی، ۵۰٪ افزایش سرعت دسترسی",
+    "tech": ["Computer Vision", "Deep Learning", "Python"],
+    "is_active": true
+  }
+
+  {
+    "title": "هوش مصنوعی تشخیص بیماری در سلامت",
+    "category": "هوش مصنوعی",
+    "icon": "🏥",
+    "description": "سیستم هوش مصنوعی برای کمک به پزشکان در تشخیص زودهنگام بیماری‌ها از تصاویر پزشکی.",
+    "results": "دقت ۹۵٪، ۶۰٪ سرعت بیشتر در تشخیص",
+    "tech": ["Deep Learning", "Medical Imaging", "TensorFlow"],
+    "is_active": true
+  }
+
+  {
+    "title": "بهینه‌سازی زنجیره تأمین",
+    "category": "داده",
+    "icon": "🚚",
+    "description": "سیستم هوشمند مسیریابی و مدیریت موجودی برای شرکت لجستیک.",
+    "results": "۳۰٪ صرفه‌جویی در سوخت، ۴۵٪ تحویل سریع‌تر",
+    "tech": ["Predictive Analytics", "IoT", "Route Optimization"],
+    "is_active": true
+  }
+
+  {
+    "title": "کنترل کیفیت خودکار",
+    "category": "بینایی",
+    "icon": "🏭",
+    "description": "سیستم بینایی کامپیوتر برای تشخیص نقص در تولید.",
+    "results": "۹۹.۵٪ تشخیص نقص، ۸۰٪ افزایش سرعت بازرسی",
+    "tech": ["Computer Vision", "Edge AI", "Real-time Processing"],
+    "is_active": true
+  }
+
+===============================================================================================================================
+contacts:
+
+{
+    "name": "Sarah Johnson",
+    "email": "sarah@company.com",
+    "phone": "+1 555 123 4567",
+    "message": "We need a computer vision solution for quality control. Please send me a quote."
+}
+
+{
+    "name": "Amirhassan Adeli",
+    "email": "amirhassanadeli.ai@gmail.com",
+    "phone": "09938059549",
+    "message": "We need a computer vision solution for quality control. Please send me a quote."
+}
