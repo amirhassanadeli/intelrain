@@ -27,19 +27,17 @@ environ.Env.read_env(
 # ---------------------------------------------------------
 # Security
 # ---------------------------------------------------------
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY", default="django-insecure-ci-key")
 
 DEBUG = env.bool("DEBUG", default=False)
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
-
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["127.0.0.1"])
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # ---------------------------------------------------------
 # Custom Variables
 # ---------------------------------------------------------
 KAVENEGAR_API_KEY = env("KAVENEGAR_API_KEY", default="")
-
 
 # ---------------------------------------------------------
 # Applications
@@ -288,28 +286,18 @@ if ENV == "server":
 # Redis (Celery or Cache)
 # ---------------------------------------------------------
 REDIS_URL = env("REDIS_URL", default="redis://localhost:6379/0")
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": REDIS_URL,
-    }
-}
-
         
 # ---------------------------------------------------------
 # Email
 # ---------------------------------------------------------
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_HOST = env("EMAIL_HOST", default="localhost")
+EMAIL_PORT = env.int("EMAIL_PORT", default=25)
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=False)
 
-EMAIL_PORT = env.int("EMAIL_PORT", default=587)
-
-EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
-
-EMAIL_HOST_USER = env("EMAIL_HOST_USER")
-
-EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
 
 # ---------------------------------------------------------
 # Logging
