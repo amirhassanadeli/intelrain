@@ -1,40 +1,36 @@
-name: Django CI
+name: Django Deploy
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: ["main"]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
-    env:
-      SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      REDIS_URL: ${{ secrets.REDIS_URL }}
-
-    strategy:
-      matrix:
-        python-version:
-          - "3.13"
-
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          python-version: ${{ matrix.python-version }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/apps/intelrain
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+            # گرفتن آخرین نسخه
+            git pull origin main
 
-      - name: Run tests
-        run: |
-          python manage.py test
+            # backend
+            source .venv/bin/activate
+            pip install -r requirements.txt
+            python manage.py migrate
+            python manage.py collectstatic --noinput
+
+            # restart server
+            sudo systemctl restart gunicorn
+            sudo systemctl restart intelrain
+            sudo systemctl restart intelrain.service
