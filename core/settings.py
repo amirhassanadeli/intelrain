@@ -201,7 +201,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # ---------------------------------------------------------
 # Internationalization
 # ---------------------------------------------------------
-LANGUAGE_CODE = 'fa-ir'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Asia/Tehran'
 
