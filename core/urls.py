@@ -9,11 +9,11 @@ urlpatterns = [
     
     path('admin/', admin.site.urls),
         
-    path('api/services/', include('services.urls')),
+    path('services/', include('services.urls')),
     
-    path('api/portfolio/', include('portfolio.urls')),
+    path('portfolio/', include('portfolio.urls')),
     
-    path('api/contacts/', include('contacts.urls')),
+    path('contacts/', include('contacts.urls')),
     
 ]
 
