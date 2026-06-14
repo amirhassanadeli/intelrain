@@ -12,18 +12,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ---------------------------------------------------------
 # Environment Variables
 # ---------------------------------------------------------
+import environ
+
 env = environ.Env(
     DEBUG=(bool, False),
 )
 
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+# فقط یک بار فایل اصلی رو بخون
+env_file = os.path.join(BASE_DIR, ".env")
+if os.path.exists(env_file):
+    environ.Env.read_env(env_file)
 
+# گرفتن ENV بعد از لود .env
 ENV = env("ENV", default="local")
 
-# سپس فایل مخصوص env را بخوان
-environ.Env.read_env(
-    os.path.join(BASE_DIR, f'.env.{ENV}')
-)
+# اگر فایل مخصوص محیط وجود داشت، بخون
+env_specific = os.path.join(BASE_DIR, f".env.{ENV}")
+if os.path.exists(env_specific):
+    environ.Env.read_env(env_specific)
+
+
 # ---------------------------------------------------------
 # Security
 # ---------------------------------------------------------
@@ -118,26 +126,20 @@ if ENV == "server":
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'intelrain',
-            'USER': 'intelrain_user',
-            'PASSWORD': 'NewStrongPass123!',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
+            'NAME': env('DB_NAME', default='intelrain'),
+            'USER': env('DB_USER', default='intelrain_user'),
+            'PASSWORD': env('DB_PASSWORD', default=''),
+            'HOST': env('DB_HOST', default='127.0.0.1'),
+            'PORT': env('DB_PORT', default='5432'),
         }
     }
-    
 else:
-
     DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-
-                'NAME': BASE_DIR / env(
-                    'SQLITE_NAME',
-                    default='db.sqlite3'
-                ),
-            }
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / env('SQLITE_NAME', default='db.sqlite3'),
         }
+    }
 
 # ---------------------------------------------------------
 # REST Framework
@@ -229,19 +231,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ---------------------------------------------------------
 # CORS
 # ---------------------------------------------------------
+
+CORS_ALLOW_CREDENTIALS = True
+
 if ENV == "server":
 
     CORS_ALLOW_ALL_ORIGINS = False
 
-    CORS_ALLOWED_ORIGINS = [
-        "http://www.intelrain.com",
-    ]
+    CORS_ALLOWED_ORIGINS = env.list(
+        "CORS_ALLOWED_ORIGINS",
+        default=[]
+    )
 
-    CORS_ALLOW_CREDENTIALS = True
-
-    CSRF_TRUSTED_ORIGINS = [
-        "http://www.intelrain.com",
-    ]
+    CSRF_TRUSTED_ORIGINS = env.list(
+        "CSRF_TRUSTED_ORIGINS",
+        default=[]
+    )
 
 else:
 
@@ -252,14 +257,52 @@ else:
         "http://127.0.0.1:3000",
     ]
 
-    CORS_ALLOW_CREDENTIALS = True
+    CSRF_TRUSTED_ORIGINS = [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ]
+
+
+# ---------------------------------------------------------
+# COOKIE SETTINGS
+# ---------------------------------------------------------
+
+SESSION_COOKIE_DOMAIN = env(
+    "SESSION_COOKIE_DOMAIN",
+    default=None
+)
+
+CSRF_COOKIE_DOMAIN = env(
+    "CSRF_COOKIE_DOMAIN",
+    default=None
+)
+
+CSRF_COOKIE_SECURE = env.bool(
+    "CSRF_COOKIE_SECURE",
+    default=False
+)
+
+SESSION_COOKIE_SECURE = env.bool(
+    "SESSION_COOKIE_SECURE",
+    default=False
+)
+
+CSRF_COOKIE_SAMESITE = env(
+    "CSRF_COOKIE_SAMESITE",
+    default="Lax"
+)
+
+SESSION_COOKIE_SAMESITE = env(
+    "SESSION_COOKIE_SAMESITE",
+    default="Lax"
+)
 
 # ---------------------------------------------------------
 # Security Settings (Production)
 # ---------------------------------------------------------
 if ENV == "server":
 
-    SECURE_SSL_REDIRECT = False
+    SECURE_SSL_REDIRECT = True
 
     SESSION_COOKIE_SECURE = True
 
@@ -276,17 +319,6 @@ if ENV == "server":
 # ---------------------------------------------------------
 REDIS_URL = env("REDIS_URL", default="redis://localhost:6379/0")
         
-# ---------------------------------------------------------
-# Email
-# ---------------------------------------------------------
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-EMAIL_HOST = env("EMAIL_HOST", default="localhost")
-EMAIL_PORT = env.int("EMAIL_PORT", default=25)
-EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=False)
-
-EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
-EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
 
 # ---------------------------------------------------------
 # Logging

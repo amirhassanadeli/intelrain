@@ -3,9 +3,6 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from django.core.mail import send_mail
-from django.conf import settings
-from django.shortcuts import get_object_or_404
 from .models import Contact
 from .serializers import ContactCreateSerializer, ContactListSerializer, ContactSerializer
 from django.middleware.csrf import get_token
@@ -16,65 +13,26 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 def get_csrf_token(request):
     return JsonResponse({'csrfToken': get_token(request)})
 
+
+
 class ContactCreateView(generics.CreateAPIView):
-    """دریافت پیام از فرم تماس با ما"""
     serializer_class = ContactCreateSerializer
-    
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        
-        # ذخیره در دیتابیس
+
         contact = serializer.save()
-        
-        # ارسال ایمیل به ادمین (اختیاری)
-        try:
-            send_mail(
-                subject=f"New Contact Message from {contact.name}",
-                message=f"""
-                Name: {contact.name}
-                Email: {contact.email}
-                Phone: {contact.phone if contact.phone else 'Not provided'}
-                Message: {contact.message}
-                
-                ---
-                View in admin: {settings.SITE_URL}/admin/contact/contact/{contact.id}/
-                """,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[settings.ADMIN_EMAIL],
-                fail_silently=True,
-            )
-        except Exception as e:
-            print(f"Email error: {e}")
-        
-        # ارسال ایمیل تأیید به کاربر (اختیاری)
-        try:
-            send_mail(
-                subject="Thank you for contacting IntelRain",
-                message=f"""
-                Dear {contact.name},
-                
-                Thank you for reaching out to us. We have received your message and will get back to you within 24 hours.
-                
-                Your message:
-                {contact.message}
-                
-                Best regards,
-                IntelRain Team
-                """,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[contact.email],
-                fail_silently=True,
-            )
-        except Exception as e:
-            print(f"Confirmation email error: {e}")
-        
-        return Response({
-            'success': True,
-            'message': 'Your message has been sent successfully! We will contact you soon.'
-        }, status=status.HTTP_201_CREATED)
 
-
+        return Response(
+            {
+                "success": True,
+                "message": "Your message has been sent successfully!",
+                "id": contact.id,
+            },
+            status=status.HTTP_201_CREATED,
+        )
+            
 class ContactListView(generics.ListAPIView):
     """لیست پیام‌ها (فقط برای ادمین)"""
     queryset = Contact.objects.all()

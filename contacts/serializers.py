@@ -27,7 +27,6 @@ class ContactCreateSerializer(serializers.ModelSerializer):
         return value
     
     def validate_phone(self, value):
-        """اعتبارسنجی شماره تماس (اختیاری)"""
         if value and len(value) < 10:
             raise serializers.ValidationError("Phone number must be at least 10 digits")
         return value
